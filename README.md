@@ -53,7 +53,7 @@ The datasets have been pre-split for model training and validation, consisting o
 Please refer to our report methods section for further details about models and evaluation metrics.
 ### Models
 * BART(Bidirectional and Auto-Regressive Transformers): a denoising autoencoder built upon a sequence-to-sequence architecture, pretrained on XSum news dataset. [Huggingface BART Documentation](https://huggingface.co/docs/transformers/v4.40.2/en/model_doc/bart#overview)
-* BART-PubMed: BART based model, pretrained on the PubMed dataset
+* BART-PubMed: BART based model, pretrained on the PubMed dataset. [Huggingface BART-PubMed](https://huggingface.co/mse30/bart-base-finetuned-pubmed)
 
 ### Evaluation Metrics
 We evaluated our model performance from three perspectives: Relevance, Readability, and Factuality. The metrics are listed as follows:
@@ -136,4 +136,13 @@ Please refer to our report results section for further details about results and
 The objective of our project is to generate more readable summaries from biomedical research papers, thereby contributing to knowledge translation and effective communication within the scientific community. Our research results have highlighted the strength of BART-PubMed in generating more readable summaries and the potential for further improvement with an additional definition retrieval step in preprocessing. The limitation is that we only tested definition retrieval on one subset of data. Moving forward, we intend to apply the definition retrieval step across all subsets to ensure consistency in the results. We fine-tuned BART-PubMed separately for different branches of topics to investigate its baseline capabilities in summarizing these topics. These result may inspire future work to design topic-specialized biomedical lay summarization solutions. Additionally, recognizing the challenge posed by limited input length, another direction to expand our experiments is to include the Longformer Encoder Decoder (LED) model. LED, based on BART, is tailored to handle longer sequences. Based on our approach in this project and following these strategic steps, it is promising that we can foster greater accessibility to biomedical research.
 
 ## Main References
+T. Goldsack, Z. Luo, Q. Xie, C. Scarton, M. Shardlow, S. Ananiadou, and C. Lin,
+“Biolaysumm 2023 shared task: Lay summarisation of biomedical research articles,”
+in Workshop on Biomedical Natural Language Processing, 2023.<br>
+
+M. Lewis, Y. Liu, N. Goyal, M. Ghazvininejad, A. rahman Mohamed, O. Levy, V. Stoy-
+anov, and L. Zettlemoyer, “Bart: Denoising sequence-to-sequence pre-training for
+natural language generation, translation, and comprehension,” in Annual Meeting
+of the Association for Computational Linguistics, 2019. <br>
+
 
