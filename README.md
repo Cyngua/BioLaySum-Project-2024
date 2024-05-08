@@ -11,9 +11,35 @@ Our project mainly consist of three parts as shown in the workflow diagram:
 * **Experiment III**: Terminology replacement: To further enhance performance, we implemented terminology replacement with definitions retrieved from a medical dictionary, [Webster Medical Library](https://www.merriam-webster.com/medical), and evaluated its impact on model performance.
 ![Project workflow diagram](workflow.jpg)
 
+## Environment Setup and Computing Infrastructure
+* Experiment I: We have a file called `env.yml` for virtual environment setup, which is provided by Yale CPSC452/552: Deep learning theory and application. The training process was run on the cpsc462 cluster [Yale McCleary](https://docs.ycrc.yale.edu/clusters/mccleary/), which supports `gpu_devel` with 6-core cpu. Here is the code to create conda environment:
+
+``` sh
+# create conda environment
+$ conda env create -f env.yml
+
+# update conda environment
+$ conda env update -n cpsc552 --file env.yml
+```
+
+* Experiment II and III: We based our last two experiments on Google Colab Pro environment plus external library installed. All the training was run on **T-4 GPU** by Google Colab. Run the following codes in colab notebooks to install the most essential libraries for this project.
+
+```
+!pip install accelerate -U
+!pip install transformers datasets evaluate
+!pip install textstat
+!pip install rouge_score
+!pip install bert_score
+!pip install summac
+```
+
+
 ## Methodologies
+Please refer to our report methods section for further details about models and evaluation metrics.
 ### Models
-* BART: 
+* BART(Bidirectional and Auto-Regressive Transformers): a denoising autoencoder built upon a sequence-to-sequence architecture, pretrained on XSum news dataset
+* BART-PubMed: BART based model, pretrained on the PubMed dataset
+
 ### Evaluation Metrics
 We evaluated our model performance from three perspectives: Relevance, Readability, and Factuality. The metrics are listed as follows:
 |                 | Evaluation Metrics         |
@@ -22,25 +48,8 @@ We evaluated our model performance from three perspectives: Relevance, Readabili
 | **Readability** | FKGL, CLI, DCRS            |
 | **Factuality**  | SummaC                     |
 
-*Flesch-Kincaid grade level*
 
-\[
-0.39\left(\frac{\text{total words}}{\text{total sentences}}\right) + 11.8 \left(\frac{\text{total syllables}}{\text{total words}}\right) - 15.59,
-\]
-
-*Coleman-Liau index*
-
-\[
-0.0588L -  0.296S + 15.8,
-\]
-
-*Dale–Chall readability score*
-
-\[
-0.1579\left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \left(\frac{\text{total words}}{\text{total sentences}}\right),
-\]
-
-## Computing Infrastructure
+## Training Details and 
 
 
 ## Dataset Description
