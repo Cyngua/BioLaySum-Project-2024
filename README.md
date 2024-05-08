@@ -22,19 +22,23 @@ We evaluated our model performance from three perspectives: Relevance, Readabili
 | **Readability** | FKGL, CLI, DCRS            |
 | **Factuality**  | SummaC                     |
 
-Formula for some metrics are listed for reference:
 *Flesch-Kincaid grade level*
-$$
-0.39\big(\frac{\mathrm{total\ words}}{\mathrm{total\ sentences}}\big) + 11.8 \big(\frac{\mathrm{total\ syllables}}{\mathrm{total\ words}}\big) - 15.59,
-$$
-*Coleman-Liau index (CLI)*
-$$
+
+\[
+0.39\left(\frac{\text{total words}}{\text{total sentences}}\right) + 11.8 \left(\frac{\text{total syllables}}{\text{total words}}\right) - 15.59,
+\]
+
+*Coleman-Liau index*
+
+\[
 0.0588L -  0.296S + 15.8,
-$$
-*Dale–Chall readability score (DCRS)*
-$$
-0.1579\big(\frac{\mathrm{difficult\ words}}{\mathrm{total\ words}} \times 100\big) + 0.0496 \big(\frac{\mathrm{total\ words}}{\mathrm{total\ sentences}}\big),
-$$
+\]
+
+*Dale–Chall readability score*
+
+\[
+0.1579\left(\frac{\text{difficult words}}{\text{total words}} \times 100\right) + 0.0496 \left(\frac{\text{total words}}{\text{total sentences}}\right),
+\]
 
 ## Computing Infrastructure
 
