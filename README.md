@@ -1,5 +1,5 @@
 # BioLaySum Project
-CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ BioNLP Workshop, ACL 2024 <br>
+CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ [BioNLP Workshop, ACL 2024](https://aclweb.org/aclwiki/BioNLP_Workshop) <br>
 Group Members: Xincheng Cai, Mengmeng Du<br>
 ## Abstract
 Biomedical research articles contain vital information for a wide audience, yet their complex language and specialized terminology often hinder comprehension for non-experts. Inspired by the BIONLP 2024 workshop, we propose a NLP solution to generate lay summaries, which are more readable to diverse audiences. We implemented two transformer-based models, specifically BART and BART-PubMed. Our study investigates the performance of these models across different biomedical topics and explores methods to improve summarization quality through definition retrieval from Webster Medical Dictionary. By enhancing the readability of biomedical publications, our work aims to promote knowledge accessibility to scientific information.
@@ -52,7 +52,7 @@ The datasets have been pre-split for model training and validation, consisting o
 ## Methodologies
 Please refer to our report methods section for further details about models and evaluation metrics.
 ### Models
-* BART(Bidirectional and Auto-Regressive Transformers): a denoising autoencoder built upon a sequence-to-sequence architecture, pretrained on XSum news dataset
+* BART(Bidirectional and Auto-Regressive Transformers): a denoising autoencoder built upon a sequence-to-sequence architecture, pretrained on XSum news dataset. [Huggingface BART Documentation](https://huggingface.co/docs/transformers/v4.40.2/en/model_doc/bart#overview)
 * BART-PubMed: BART based model, pretrained on the PubMed dataset
 
 ### Evaluation Metrics
@@ -132,4 +132,8 @@ Please refer to our report results section for further details about results and
 | w/o  replacement  | 53.805  | 16.223  | 49.575  | 85.433     | 8.667 | 9.924 | 8.851 | 41.403 |
 | with  replacement  | **58.871** | **20.084** | **56.669** | 84.144     | **8.137** | **9.618** | **8.071** | 40.955 |
 
+## Limitations and Conclusions
+The objective of our project is to generate more readable summaries from biomedical research papers, thereby contributing to knowledge translation and effective communication within the scientific community. Our research results have highlighted the strength of BART-PubMed in generating more readable summaries and the potential for further improvement with an additional definition retrieval step in preprocessing. The limitation is that we only tested definition retrieval on one subset of data. Moving forward, we intend to apply the definition retrieval step across all subsets to ensure consistency in the results. We fine-tuned BART-PubMed separately for different branches of topics to investigate its baseline capabilities in summarizing these topics. These result may inspire future work to design topic-specialized biomedical lay summarization solutions. Additionally, recognizing the challenge posed by limited input length, another direction to expand our experiments is to include the Longformer Encoder Decoder (LED) model. LED, based on BART, is tailored to handle longer sequences. Based on our approach in this project and following these strategic steps, it is promising that we can foster greater accessibility to biomedical research.
+
+## Main References
 
