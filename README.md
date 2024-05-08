@@ -1,6 +1,10 @@
 # BioLaySum Project
 CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ [BioNLP Workshop, ACL 2024](https://aclweb.org/aclwiki/BioNLP_Workshop) <br>
 Group Members: Xincheng Cai, Mengmeng Du<br>
+
+## Outline
+
+
 ## Abstract
 Biomedical research articles contain vital information for a wide audience, yet their complex language and specialized terminology often hinder comprehension for non-experts. Inspired by the BIONLP 2024 workshop, we propose a NLP solution to generate lay summaries, which are more readable to diverse audiences. We implemented two transformer-based models, specifically BART and BART-PubMed. Our study investigates the performance of these models across different biomedical topics and explores methods to improve summarization quality through definition retrieval from Webster Medical Dictionary. By enhancing the readability of biomedical publications, our work aims to promote knowledge accessibility to scientific information.
 
