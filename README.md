@@ -12,7 +12,7 @@ Our project mainly consist of three parts as shown in the workflow diagram:
 ![Project workflow diagram](workflow.jpg)
 
 ## Environment Setup and Computing Infrastructure
-* Experiment I: We have a file called `env.yml` for virtual environment setup, which is provided by Yale CPSC452/552: Deep learning theory and application. The training process was run on the cpsc462 cluster [Yale McCleary](https://docs.ycrc.yale.edu/clusters/mccleary/), which supports `gpu_devel` with 6-core cpu. Here is the code to create conda environment:
+* Experiment I: We have a file called `env.yml` for virtual environment setup, which is provided by Yale CPSC452/552: Deep learning theory and application. The training process was run on the cpsc462 cluster [Yale McCleary](https://docs.ycrc.yale.edu/clusters/mccleary/), which supports `gpu_devel` with 6-core cpu (Pytorch CUDA version 11.8, torch version 2.2.2). Here is the code to create conda environment:
 
 ``` sh
 # create conda environment
@@ -22,7 +22,7 @@ $ conda env create -f env.yml
 $ conda env update -n cpsc552 --file env.yml
 ```
 
-* Experiment II and III: We based our last two experiments on Google Colab Pro environment plus external library installed. All the training was run on **T-4 GPU** by Google Colab. Run the following codes in colab notebooks to install the most essential libraries for this project.
+* Experiment II and III: We based our last two experiments on Google Colab Pro environment plus external library installed. All the training was run on **T-4 GPU** by Google Colab (CUDA version 12.0, torch version 2.2.1+cu121). Run the following codes in colab notebooks to install the most essential libraries for this project.
 
 ```
 !pip install accelerate -U
@@ -31,8 +31,23 @@ $ conda env update -n cpsc552 --file env.yml
 !pip install rouge_score
 !pip install bert_score
 !pip install summac
+!pip install requests beautifulsoup4
+!pip install spacy
+!python -m spacy download en_core_web_lg
 ```
 
+## Dataset Description
+[Link to the datasets](https://drive.google.com/drive/folders/1sfmYlHL9FcAjKpLzjW4CO_izJmVbcZ-g?usp=sharing), which is a google drive folder accessible to Yale community. We utilized eLife biomedical journals in this project, an open-access peer-reviewed journal with a specific focus on biomedical and life sciences. The original datasets are provided by the shared task in .jsonl format, where each line represents a JSON object with the fields outlined 
+
+| Column       | Description            |
+|--------------|------------------------|
+| Lay summary  | Article lay summary   |
+| Article      | Article main text      |
+| Headings     | Article headings       |
+| Keywords     | Topic of the article   |
+| ID           | Article ID             |
+
+The datasets have been pre-split for model training and validation, consisting of 4,346 instances earmarked for training and 241 for validation. The folder also contains the data modified with a definition replacement preprocessing step, and the data rearranged according to the keywords. All these modified datasets are in a json format.
 
 ## Methodologies
 Please refer to our report methods section for further details about models and evaluation metrics.
@@ -48,19 +63,73 @@ We evaluated our model performance from three perspectives: Relevance, Readabili
 | **Readability** | FKGL, CLI, DCRS            |
 | **Factuality**  | SummaC                     |
 
+## Training Details
+We utilized `Trainer` for training ([Huggingface Trainer Documentation](https://huggingface.co/docs/transformers/en/main_classes/trainer)). It allows supports distributed training on multiple GPUs/TPUs and mixed precision, and it is optimized for Huggingface Transformers. The number of training epochs was set due to out limited training time and the model performance. Here is an example of our trainer initialization, which is consistent throughout our experiments.
 
-## Training Details and 
+```
+from transformers import Trainer, TrainingArguments
+
+training_args = TrainingArguments(
+    output_dir='./results',          
+    num_train_epochs=3,              # number training epochs is 3
+    per_device_train_batch_size=8,   # training batch size is 8
+    per_device_eval_batch_size=8,    # evaluation batch size is 8
+    warmup_steps=100,                # warmupstep is 100
+    weight_decay=0.01,               # weight decay parameter is 0.01
+    logging_dir='./logs',            
+    logging_steps=10,                
+    evaluation_strategy="steps",     
+    eval_steps=100,                  
+    save_strategy="steps",           
+    save_steps=500,                  
+    fp16=True, # Enable mixed precision                      
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=val_dataset,
+    compute_metrics=compute_metrics,
+)
+
+trainer.train()
+```
+
+## Results
+Please refer to our report results section for further details about results and discussions. Here we only outline the tables of evaluation. <br>
+**Experiment I**: BART vs BART-PubMed on the entire dataset
+
+| Metric            | ROUGE-1 | ROUGE-2 | ROUGE-L | BERT-score | FKGL | CLI  | DCRS |
+|-------------------|---------|---------|---------|------------|------|------|------|
+| **BART**          | **57.82** | **22.44** | **54.16** | **86.93** | 9.17 | 10.62 | 8.97 |
+| **BART-PubMed**   | 54.92   | 19.13   | 51.06   | 86.07      | **8.71** | **10.13** | **8.71** |
+
+**Experiemnt II**: BART-PubMed model across various topics
+
+| Domain                                | ROUGE-1 | ROUGE-2 | ROUGE-L | BERT-score |
+|---------------------------------------|---------|---------|---------|------------|
+| Biochemistry and Chemical Biology     | 52.62   | 16.54   | 49.15   | 85.57      |
+| Cell Biology                          | 54.27   | 17.99   | 50.36   | **86.13**  |
+| Developmental Biology                 | 54.30   | 18.88   | 50.38   | 86.08      |
+| Microbiology and Infectious Disease   | 54.42   | 18.83   | 50.63   | 86.08      |
+| Neuroscience                          | 55.40   | **19.85**| 51.57   | 86.05      |
+| Structural Biology and Molecular Biophysics | **56.98** | 19.36 | **51.75** | 86.00 |
+
+| Domain                                | FKGL   | CLI    | DCRS   | SummaC |
+|---------------------------------------|--------|--------|--------|--------|
+| Biochemistry and Chemical Biology     | 7.886  | 9.608  | 8.869  | 0.417  |
+| Cell Biology                          | 8.863  | 10.473 | 8.825  | 0.417  |
+| Developmental Biology                 | **8.233** | **9.324** | 8.530  | **0.450** |
+| Microbiology and Infectious Disease   | 8.762  | 10.846 | 8.762  | 0.395  |
+| Neuroscience                          | 8.658  | 10.360 | **8.503** | 0.431  |
+| Structural Biology and Molecular Biophysics | 9.493 | 10.130 | 9.185  | 0.395  |
+
+**Experiemnt III**: Terminology replacement
+
+|               | ROUGE-1 | ROUGE-2 | ROUGE-L | Bert-score | FKGL  | CLI   | DCRS  | SummaC |
+|---------------|---------|---------|---------|------------|-------|-------|-------|--------|
+| w/o  replacement  | 53.805  | 16.223  | 49.575  | 85.433     | 8.667 | 9.924 | 8.851 | 41.403 |
+| with  replacement  | **58.871** | **20.084** | **56.669** | 84.144     | **8.137** | **9.618** | **8.071** | 40.955 |
 
 
-## Dataset Description
-[Link to the datasets](https://drive.google.com/drive/folders/1sfmYlHL9FcAjKpLzjW4CO_izJmVbcZ-g?usp=sharing), which is a google drive folder accessible to Yale community. We utilized eLife biomedical journals in this project, an open-access peer-reviewed journal with a specific focus on biomedical and life sciences. The original datasets are provided by the shared task in .jsonl format, where each line represents a JSON object with the fields outlined 
-
-| Column       | Description            |
-|--------------|------------------------|
-| Lay summary  | Article lay summary   |
-| Article      | Article main text      |
-| Headings     | Article headings       |
-| Keywords     | Topic of the article   |
-| ID           | Article ID             |
-
-The datasets have been pre-split for model training and validation, consisting of 4,346 instances earmarked for training and 241 for validation. The folder also contains the data modified with a definition replacement preprocessing step, and the data rearranged according to the keywords. All these modified datasets are in a json format.
