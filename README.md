@@ -21,6 +21,7 @@ We evaluated our model performance from three perspectives: Relevance, Readabili
 | **Relevance**   | ROUGE (1, 2, and L) and BERTScore |
 | **Readability** | FKGL, CLI, DCRS            |
 | **Factuality**  | SummaC                     |
+
 Formula for some metrics are listed for reference:
 *Flesch-Kincaid grade level*
 $$
