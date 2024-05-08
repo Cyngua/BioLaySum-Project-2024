@@ -2,6 +2,15 @@
 CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ BioNLP Workshop, ACL 2024 <br>
 Group Members: Xincheng Cai, Mengmeng Du<br>
 ## Project Workflow
+Our project mainly consist of three parts as shown in the workflow diagram:
+* Experiment I: BART vs BART-PubMed on the entire dataset: Compared the finetuning performance on the test dataset using metrics from three aspects: relevance, readability and factuality. 
+* Experiemnt II: BART-PubMed model across various topics: Finetune BART-PubMed model separately on 6 subsets of the dataset stratified by keywords. 
+* Experiment III: Terminology replacement: To further enhance performance, we implemented terminology replacement with definitions retrieved from a medical dictionary, [Webster Medical Library](https://www.merriam-webster.com/medical), and evaluated its impact on model performance.
+![Project workflow diagram](workflow.jpg)
+## Methodologies
+### Models
+
+### Evaluation Metrics
 
 
 ## Computing Infrastructure
