@@ -1,6 +1,6 @@
 # BioLaySum Project
 CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ [BioNLP Workshop, ACL 2024](https://aclweb.org/aclwiki/BioNLP_Workshop) <br>
-Group Members: Xincheng Cai, Mengmeng Du<br>
+Contributors: Xincheng Cai, [Mengmeng Du](https://github.com/dmm2001) <br>
 
 ## Outline
 
