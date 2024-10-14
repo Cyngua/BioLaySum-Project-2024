@@ -65,9 +65,9 @@ $ conda env update -n cpsc552 --file env.yml
 ```
 
 ## Dataset Description
-[Link to the datasets](https://drive.google.com/drive/folders/1sfmYlHL9FcAjKpLzjW4CO_izJmVbcZ-g?usp=sharing), which is a google drive folder accessible to Yale community. We utilized eLife biomedical journals in this project, an open-access peer-reviewed journal with a specific focus on biomedical and life sciences. The original datasets are provided by the shared task in .jsonl format, where each line represents a JSON object with the fields outlined 
+[Link to the datasets](https://drive.google.com/drive/folders/1sfmYlHL9FcAjKpLzjW4CO_izJmVbcZ-g?usp=sharing), which is a google drive folder accessible to everyone. We utilized eLife biomedical journals in this project, an open-access peer-reviewed journal with a specific focus on biomedical and life sciences. The original datasets provided by the shared task are `eLife_train.jsonl`, `eLife_val.jsonl`, and `eLife_test.jsonl`. Each line represents a JSON object with the fields outlined as follows:
 
-| Column       | Description            |
+| Attribute Name       | Description            |
 |--------------|------------------------|
 | Lay summary  | Article lay summary   |
 | Article      | Article main text      |
@@ -75,7 +75,7 @@ $ conda env update -n cpsc552 --file env.yml
 | Keywords     | Topic of the article   |
 | ID           | Article ID             |
 
-The datasets have been pre-split for model training and validation, consisting of 4,346 instances earmarked for training and 241 for validation. The folder also contains the data modified with a definition replacement preprocessing step, and the data rearranged according to the keywords. All these modified datasets are in a json format.
+The datasets have been split for model training and validation, consisting of 4,346 instances earmarked for training and 241 for validation. The folder also contains the data rearranged according to the keywords (`eLife_train_keyword.json`, `eLife_val_keyword.json`), and the data modified with a definition replacement preprocessing step (e.g. `eLift_train_modified_structural.json`).
 
 ## Methods
 Please refer to our report methods section for further details about models and evaluation metrics.
