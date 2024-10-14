@@ -2,6 +2,7 @@
 Shared Task: Lay Summarization of Biomedical Research Articles @ [BioNLP Workshop, ACL 2024](https://aclweb.org/aclwiki/BioNLP_Workshop) <br>
 Contributors: [Xincheng Cai](https://github.com/Cyngua), [Mengmeng Du](https://github.com/dmm2001) <br>
 Project Directory Tree:
+```
 .
 └── BioLaySum-Project-2024/
     ├── Scripts/
@@ -13,6 +14,7 @@ Project Directory Tree:
     ├── README.md
     ├── env.yml
     └── workflow.jpg
+```
 
 ## Outline
 
