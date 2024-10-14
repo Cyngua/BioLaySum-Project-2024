@@ -1,8 +1,19 @@
 # BioLaySum Project
 CPSC477 Final Project/Shared Task: Lay Summarization of Biomedical Research Articles @ [BioNLP Workshop, ACL 2024](https://aclweb.org/aclwiki/BioNLP_Workshop) <br>
-Group Members: Xincheng Cai, Mengmeng Du<br>
+Contributors: [Xincheng Cai](https://github.com/Cyngua), [Mengmeng Du](https://github.com/dmm2001) <br>
 
 ## Outline
+
+1. [Abstract](#abstract)
+2. [Project Workflow](#project-workflow)
+3. [Environment Setup and Computing Infrastructure](#environment-setup-and-computing-infrastructure)
+4. [Dataset Description](#dataset-description)
+5. [Methods](#methods)
+6. [Training Details](#training-details)
+7. [Results](#results)
+8. [Limitations and Conclusions](#limitations-and-conclusions)
+9. [Main References](#main-references)
+
 
 ## Abstract
 Biomedical research articles contain vital information for a wide audience, yet their complex language and specialized terminology often hinder comprehension for non-experts. Inspired by the BIONLP 2024 workshop, we propose a NLP solution to generate lay summaries, which are more readable to diverse audiences. We implemented two transformer-based models, specifically BART and BART-PubMed. Our study investigates the performance of these models across different biomedical topics and explores methods to improve summarization quality through definition retrieval from Webster Medical Dictionary. By enhancing the readability of biomedical publications, our work aims to promote knowledge accessibility to scientific information.
@@ -52,7 +63,7 @@ $ conda env update -n cpsc552 --file env.yml
 
 The datasets have been pre-split for model training and validation, consisting of 4,346 instances earmarked for training and 241 for validation. The folder also contains the data modified with a definition replacement preprocessing step, and the data rearranged according to the keywords. All these modified datasets are in a json format.
 
-## Methodologies
+## Methods
 Please refer to our report methods section for further details about models and evaluation metrics.
 ### Models
 * BART(Bidirectional and Auto-Regressive Transformers): a denoising autoencoder built upon a sequence-to-sequence architecture, pretrained on XSum news dataset. [Huggingface BART Documentation](https://huggingface.co/docs/transformers/v4.40.2/en/model_doc/bart#overview)
